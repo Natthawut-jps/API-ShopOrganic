@@ -1,11 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize({
-    host: 'localhost',
-    database: 'mydb',
-    username: 'root',
-    password: 'root',
-    dialect: 'mysql',
-});
+const { DataTypes } = require('sequelize');
+const sequelize = require('./_Database_Connected');
 
 const Favorite = sequelize.define('favorite', {
     name: {

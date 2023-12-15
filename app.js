@@ -10,6 +10,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
+// model
+require('./model/Cart');
+require('./model/Favorite');
+require('./model/Order');
+require('./model/Products');
+require('./model/Shipping_address');
+require('./model/Current_address');
+require('./model/Userinfo');
+
 // router
 app.use('/CartAndFavorite', CartandFavorite);
 
