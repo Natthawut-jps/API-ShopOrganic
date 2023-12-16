@@ -2,6 +2,7 @@ require('dotenv').config({ path: './.env'});
 require('./router/passport');
 const express = require('express');
 const cors = require('cors');
+const passport = require('passport');
 const path = require('path');
 const app = express();
 // middlewere
@@ -21,15 +22,17 @@ require('./model/Userinfo');
 
 // import route
 const logins = require('./router/Logins');
+const register = require('./router/register');
 // public route
-app.use('/login', logins)
+app.use('/login', logins);
+app.use('/register', register);
 
 // import private route
-const cartand_favorite  = require('./router/CartandFavorite');
-const passport = require('passport');
+const cart_favorite  = require('./router/CartandFavorite');
+const auth = require('./router/authorization');
 // private route
-app.use('/CartAndFavorite', cartand_favorite);
-
+app.use('/CartAndFavorite', passport.authenticate('auth_usp', { session: false }), cart_favorite);
+app.use('/address', passport.authenticate('auth_usp', { session: false }), )
 // listen server
 app.listen(process.env.PORT, () => {
     console.log(`successfully a port ${process.env.PORT}`)
