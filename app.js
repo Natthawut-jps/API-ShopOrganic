@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './.env'});
+require('dotenv').config({ path: './.env.local'});
 require('./router/passport');
 const express = require('express');
 const cors = require('cors');
@@ -28,12 +28,14 @@ app.use('/login', logins);
 app.use('/register', register);
 
 // import private route
-const cart_favorite  = require('./router/CartandFavorite');
-const auth = require('./router/authorization');
+const auth = require('./router/auth');
+const authorize = require('./router/authorization');
+
 // private route
-app.use('/CartAndFavorite', passport.authenticate('auth_usp', { session: false }), cart_favorite);
-app.use('/address', passport.authenticate('auth_usp', { session: false }), )
+app.use('/auth', auth);
+app.use('r_auth', passport.authenticate('authorized', { session: false }));
+
 // listen server
 app.listen(process.env.PORT, () => {
-    console.log(`successfully a port ${process.env.PORT}`)
+    console.log(`successfully a port ${process.env.DOTENV_PORT}`)
 })

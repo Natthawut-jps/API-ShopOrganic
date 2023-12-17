@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "../.env.local" });
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const bcrypt = require("bcrypt");
@@ -12,8 +12,8 @@ passport.use(
   "login_username",
   new LocalStrategy(
     {
-      usernameField: email,
-      passwordField: password,
+      usernameField: 'email',
+      passwordField: 'password',
       session: false,
     },
     async (email, password, cb) => {
@@ -23,12 +23,12 @@ passport.use(
           if (bcrypt.compare(password, user.password)) {
             const _ut = jwt.sign(
               { _uid: user.id },
-              process.env.jwt_Secrect_ut,
+              process.env.DOTENV_jwt_Secrect_ut,
               { algorithm: "HS384", expiresIn: "5m" }
             );
             const _ur = jwt.sign(
               { _uid: user.id },
-              process.env.jwt_Secrect_ur,
+              process.env.DOTENV_jwt_Secrect_ur,
               { algorithm: "HS384", expiresIn: "15d" }
             );
             return cb(null, { _ut: _ut, _ur: _ur });
@@ -36,10 +36,10 @@ passport.use(
             cb(" Incorrect password");
           }
         } else {
-          return cb(" username and password Incorrect !New create Account");
+          return cb(null, false,{ massage:  " username and password Incorrect !New create Account" });
         }
       } catch (error) {
-        cb(error);
+        cb(error, null);
       }
     }
   )
@@ -48,17 +48,17 @@ passport.use(
 // authentication endpoint at Authorize
 passport.use('auth_usp', new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.jwt_Secrect_ut
+    secretOrKey: process.env.DOTENV_jwt_Secrect_ut
 },
 async( payload, cb ) => {
     try {
         if( payload ) {
-            return cb( payload );
+            return cb(null, payload );
         } else {
-            return cb(' error payload null or undefind incorrect');
+            return cb(null, false, { massage: ' error payload null or undefind incorrect' });
         };
     } catch( error ) {
-        cb( error );
+        cb( error, null );
     };
 }
 ));
@@ -69,14 +69,14 @@ passport.use(
   new JwtStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.jwt_Secrect_ut,
+      secretOrKey: process.env.DOTENV_jwt_Secrect_ut,
     },
     async (payload, cb) => {
       try {
         if (payload) {
           const _ut = jwt.sign(
             { _uid: payload._uid },
-            process.env.jwt_Secrect_ut,
+            process.env.DOTENV_jwt_Secrect_ut,
             {
               algorithm: "HS384",
               expiresIn: "5m",
@@ -84,7 +84,7 @@ passport.use(
           );
           const _ur = jwt.sign(
             { _uid: user._uid },
-            process.env.jwt_Secrect_ur,
+            process.env.DOTENV_jwt_Secrect_ur,
             {
               algorithm: "HS384",
               expiresIn: "15d",
@@ -92,10 +92,10 @@ passport.use(
           );
           return cb(null, { _ut: _ut, _ur: _ur });
         } else {
-          return cb(" error please you login again!!");
+          return cb(null, false, { massage: " error please you login again!!" });
         }
       } catch (error) {
-        cb(error);
+        cb(error, false);
       }
     }
   )
