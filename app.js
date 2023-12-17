@@ -33,7 +33,7 @@ const authorize = require('./router/authorization');
 
 // private route
 app.use('/auth', auth);
-app.use('r_auth', passport.authenticate('authorized', { session: false }));
+app.use('/auth/r_auth', passport.authenticate('authorized', { session: false }));
 
 // listen server
 app.listen(process.env.PORT, () => {
