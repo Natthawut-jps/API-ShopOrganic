@@ -18,7 +18,7 @@ const Userinfo = sequelize.define('userinfo', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    phone: {
+    accept: {
         type: DataTypes.INTEGER,
         allowNull: true,
     },

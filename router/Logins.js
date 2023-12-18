@@ -11,10 +11,10 @@ route.get("/auth/username", async (req, res, next) => {
         if (user) {
           return res.json(user);
         } else {
-          res.send(err);
+          res.status(401).send(err);
         }
       } catch (error) {
-        res.send(error);
+        res.status(401).send(error);
       }
     }
   )(req, res, next);

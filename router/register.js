@@ -15,7 +15,7 @@ route.post("/usr", async (req, res) => {
             last_name: req.body.last_name,
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),
-            phone: req.body.phone,
+            accept: req.body.accept,
             imgURL: req.body.imgURL
         });
         const _ut = jwt.sign(
