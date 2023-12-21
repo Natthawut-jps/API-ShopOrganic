@@ -30,6 +30,10 @@ const Shipping_address = sequelize.define("shipping_address", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  amphure: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   zipCode: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -42,6 +46,11 @@ const Shipping_address = sequelize.define("shipping_address", {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  satus: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0
+  }
 });
 
 (async () => {
