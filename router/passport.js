@@ -18,9 +18,9 @@ passport.use(
     },
     async (email, password, cb) => {
       try {
-        const user = await Userinfo.findOne({ email: email });
+        const user = await Userinfo.findOne({ where: { email: email } });
         if (user) {
-          if (bcrypt.compare(password, user.password)) {
+          if (await bcrypt.compare(password, user.password)) {
             const _ut = jwt.sign(
               { _uid: user.id },
               process.env.DOTENV_jwt_Secrect_ut,

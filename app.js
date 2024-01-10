@@ -36,6 +36,6 @@ app.use('/auth', auth);
 app.use('/auth/r_auth', passport.authenticate('authorized', { session: false }));
 
 // listen server
-app.listen(process.env.PORT, () => {
+app.listen(process.env.DOTENV_PORT, () => {
     console.log(`successfully a port ${process.env.DOTENV_PORT}`)
 })

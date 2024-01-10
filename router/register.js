@@ -28,7 +28,7 @@ route.post("/usr", async (req, res) => {
           process.env.DOTENV_jwt_Secrect_ur,
           { algorithm: "HS384", expiresIn: "15d" }
         );
-        return res.json({ _ut: _ut, _ur: _ur });
+        return res.status(200).json({ _ut: _ut, _ur: _ur });
       } else {
         return res.status(401).send(" already have the account !to Login");
       }
