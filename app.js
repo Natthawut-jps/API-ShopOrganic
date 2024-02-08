@@ -19,6 +19,7 @@ require('./model/Products');
 require('./model/Shipping_address');
 require('./model/Current_address');
 require('./model/Userinfo');
+require('./model/Admin');
 
 // import route
 const logins = require('./router/Logins');
