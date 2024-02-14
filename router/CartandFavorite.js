@@ -5,7 +5,7 @@ const { Favorite } = require('../model/Favorite');
 
 // Cart
 route.get('/cart', async (req, res, next) => {
-    res.send(await Cart.findAll());
+    res.status(200).json(await Cart.findAll());
 });
 route.post('/addTocart', async (req, res, next) => {
     const { id, name, price, categories, rating, uid } = req.body;

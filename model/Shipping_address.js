@@ -54,7 +54,7 @@ const Shipping_address = sequelize.define("shipping_address", {
 });
 
 (async () => {
-  sequelize.sync({ force: false });
+  await sequelize.sync({ force: false });
 })();
 
 module.exports = { Shipping_address };

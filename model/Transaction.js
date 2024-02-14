@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./_Database_Connected");
 
-const Transaction = sequelize.define('userinfo', {
+const Transaction = sequelize.define('trnsaction', {
     username: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -13,7 +13,7 @@ const Transaction = sequelize.define('userinfo', {
 });
 
 (async () => {
-    sequelize.sync({ force: false });
+    await sequelize.sync({ force: false });
   })();
   
   module.exports = { Transaction };

@@ -23,12 +23,12 @@ passport.use(
           if (await bcrypt.compare(password, user.password)) {
             const _ut = jwt.sign(
               { _uid: user.id },
-              process.env.DOTENV_jwt_Secrect_ut,
+              process.env.DOTENV_JWT_UT,
               { algorithm: "HS384", expiresIn: "5m" }
             );
             const _ur = jwt.sign(
               { _uid: user.id },
-              process.env.DOTENV_jwt_Secrect_ur,
+              process.env.DOTENV_JWT_UR,
               { algorithm: "HS384", expiresIn: "15d" }
             );
             return cb(null, { _ut: _ut, _ur: _ur });
@@ -48,7 +48,7 @@ passport.use(
 // authentication endpoint at Authorize
 passport.use('auth_usp', new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.DOTENV_jwt_Secrect_ut
+    secretOrKey: process.env.DOTENV_JWT_UT
 },
 async( payload, cb ) => {
     try {
@@ -64,27 +64,26 @@ async( payload, cb ) => {
 ));
 
 // auth profiles user data store private
-passport.use(
-  "authorized",
+passport.use("authorized",
   new JwtStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.DOTENV_jwt_Secrect_ut,
+      secretOrKey: process.env.DOTENV_JWT_UR
     },
     async (payload, cb) => {
       try {
         if (payload) {
           const _ut = jwt.sign(
             { _uid: payload._uid },
-            process.env.DOTENV_jwt_Secrect_ut,
+            process.env.DOTENV_JWT_UT,
             {
               algorithm: "HS384",
               expiresIn: "5m",
             }
           );
           const _ur = jwt.sign(
-            { _uid: user._uid },
-            process.env.DOTENV_jwt_Secrect_ur,
+            { _uid: payload._uid },
+            process.env.DOTENV_JWT_UR,
             {
               algorithm: "HS384",
               expiresIn: "15d",

@@ -45,7 +45,7 @@ const Current_address = sequelize.define('current_address', {
 });
 
 (async () => {
-    sequelize.sync({ force: false });
+   await sequelize.sync({ force: false });
   })();
   
   module.exports = { Current_address };

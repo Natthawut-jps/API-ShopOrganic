@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./_Database_Connected");
 
-const Admin = sequelize.define('userinfo', {
+const Admin = sequelize.define('admin', {
     username: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -13,7 +13,7 @@ const Admin = sequelize.define('userinfo', {
 });
 
 (async () => {
-    sequelize.sync({ force: false });
+    await sequelize.sync({ force: false });
   })();
   
   module.exports = { Admin };

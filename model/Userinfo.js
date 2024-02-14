@@ -29,7 +29,7 @@ const Userinfo = sequelize.define('userinfo', {
 });
 
 (async () => {
-    sequelize.sync({ force: false });
+   await sequelize.sync({ force: false });
   })();
   
   module.exports = { Userinfo };

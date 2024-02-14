@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./_Database_Connected");
 
-const Income = sequelize.define('userinfo', {
+const Income = sequelize.define('income', {
     emp_name: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -17,7 +17,7 @@ const Income = sequelize.define('userinfo', {
 });
 
 (async () => {
-    sequelize.sync({ force: false });
+   await sequelize.sync({ force: false });
   })();
   
   module.exports = { Income };

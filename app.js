@@ -20,6 +20,7 @@ require('./model/Shipping_address');
 require('./model/Current_address');
 require('./model/Userinfo');
 require('./model/Admin');
+require('./model/Transaction');
 
 // import route
 const logins = require('./router/Logins');
@@ -33,8 +34,10 @@ const auth = require('./router/auth');
 const authorize = require('./router/authorization');
 
 // private route
-app.use('/auth', auth);
-app.use('/auth/r_auth', passport.authenticate('authorized', { session: false }));
+app.use('/auth', passport.authenticate('auth_usp', { session: false }), auth);
+app.use('/refresh/r_auth', passport.authenticate("authorized", { session: false }), async (req, res) => {
+    res.status(200).json(req.user)
+});
 
 // listen server
 app.listen(process.env.DOTENV_PORT, () => {
