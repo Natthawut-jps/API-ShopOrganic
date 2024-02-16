@@ -1,11 +1,16 @@
 const express = require('express');
 const route = express.Router();
-const { Cart } = require('../model/Cart');
-const { Favorite } = require('../model/Favorite');
+const { Cart } = require('../../model/Cart');
+const { Favorite } = require('../../model/Favorite');
 
 // Cart
 route.get('/cart', async (req, res, next) => {
-    res.status(200).json(await Cart.findAll());
+    const cart = await Cart.findAll();
+    if(cart) {
+        res.status(200).json(cart);
+    } else {
+        res.status(200).json({});
+    }
 });
 route.post('/addTocart', async (req, res, next) => {
     const { id, name, price, categories, rating, uid } = req.body;

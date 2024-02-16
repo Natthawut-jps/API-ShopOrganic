@@ -1,29 +1,28 @@
 const express = require("express");
 const route = express.Router();
-const { Shipping_address } = require("../model/Shipping_address");
-const { Userinfo } = require("../model/Userinfo");
+const { Shipping_address } = require("../../model/Shipping_address");
+const { Userinfo } = require("../../model/Userinfo");
 
-route.get("/address", async (req, res) => {
-  const address = await Shipping_address.findAll({ where: { email: req.user.email }});
+route.get("/all", async (req, res) => {
+  const address = await Shipping_address.findAll({ where: { email: req.user._uid }});
   res.status(200).json(address);
 });
 
-route.post("/increaseaddress", async (req, res) => {
+route.post("/add", async (req, res) => {
   try {
     if (req.body && req.user) {
       const all = await Shipping_address.findAll();
-      const user = await Userinfo.findOne({ email: req.user.email });
+      const user = await Userinfo.findOne({ email: req.user._uid });
       if (user) {
         const address = await Shipping_address.create({
           first_name: req.body.first_name,
           last_name: req.body.last_name,
-          company: req.body.company,
           street: req.body.street,
           county: req.body.county,
           tambon: req.body.tambon,
-          amphure: req.body.amphure,
+          states: req.body.amphure,
           zipCode: req.body.zipCode,
-          email: req.body.email,
+          email: req.user._uid,
           phone: req.body.phone,
           status: all ? 0 : 1,
         });
@@ -43,7 +42,7 @@ route.post("/updateaddress", async (req, res) => {
   try {
     if (req.body && req.user) {
       const all = await Shipping_address.findAll();
-      const user = await Userinfo.findOne({ email: req.user.email });
+      const user = await Userinfo.findOne({ email: req.user._uid });
       if (user) {
         const address = await Shipping_address.update({
           first_name: req.body.first_name,

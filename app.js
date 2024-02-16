@@ -23,15 +23,13 @@ require('./model/Admin');
 require('./model/Transaction');
 
 // import route
-const logins = require('./router/Logins');
-const register = require('./router/register');
+const publict = require('./router/view/_public');
+
 // public route
-app.use('/login', logins);
-app.use('/register', register);
+app.use('/public', publict);
 
 // import private route
-const auth = require('./router/auth');
-const authorize = require('./router/authorization');
+const auth = require('./router/auth/_auth');
 
 // private route
 app.use('/auth', passport.authenticate('auth_usp', { session: false }), auth);

@@ -10,10 +10,6 @@ const Shipping_address = sequelize.define("shipping_address", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  company: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   street: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -29,10 +25,6 @@ const Shipping_address = sequelize.define("shipping_address", {
   tambon: {
     type: DataTypes.STRING,
     allowNull: true,
-  },
-  amphure: {
-    type: DataTypes.STRING,
-    allowNull: true
   },
   zipCode: {
     type: DataTypes.INTEGER,

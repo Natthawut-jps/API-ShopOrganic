@@ -3,7 +3,7 @@ const express = require("express");
 const route = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { Userinfo } = require("../model/Userinfo");
+const { Userinfo } = require("../../model/Userinfo");
 
 route.post("/usr", async (req, res) => {
   try {
