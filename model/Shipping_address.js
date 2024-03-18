@@ -38,10 +38,9 @@ const Shipping_address = sequelize.define("shipping_address", {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  satus: {
+  status: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 0
   }
 });
 

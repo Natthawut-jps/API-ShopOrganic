@@ -13,14 +13,14 @@ route.get('/cart', async (req, res, next) => {
     }
 });
 route.post('/addTocart', async (req, res, next) => {
-    const { id, name, price, categories, rating, uid } = req.body;
+    const { id, name, price, categories, rating, uid, imgURL } = req.body;
     if (req.body) {
         await Cart.create({
             name: name,
             price: price,
             categories: categories,
             rating: rating,
-            imgURL: '/img/Tometo.png',
+            imgURL: 'Tometo.png',
             pid: id,
             uid: uid
         }).then(async () => {

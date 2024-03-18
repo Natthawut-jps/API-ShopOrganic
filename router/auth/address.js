@@ -3,8 +3,11 @@ const route = express.Router();
 const { Shipping_address } = require("../../model/Shipping_address");
 const { Userinfo } = require("../../model/Userinfo");
 
+//endpoind "/address/all"
 route.get("/all", async (req, res) => {
-  const address = await Shipping_address.findAll({ where: { email: req.user._uid }});
+  const address = await Shipping_address.findAll({
+    where: { email: req.user._uid },
+  });
   res.status(200).json(address);
 });
 
@@ -24,7 +27,7 @@ route.post("/add", async (req, res) => {
           zipCode: req.body.zipCode,
           email: req.user._uid,
           phone: req.body.phone,
-          status: all ? 0 : 1,
+          status: all.length === 0 ? 1 : 0,
         });
         return res.status(200).json(address);
       } else {
@@ -55,7 +58,6 @@ route.post("/updateaddress", async (req, res) => {
           zipCode: req.body.zipCode,
           email: req.body.email,
           phone: req.body.phone,
-          status: all ? 0 : 1,
         });
         return res.status(200).json(address);
       } else {
@@ -105,4 +107,20 @@ route.post("/setdefultaddress", async (req, res) => {
     }
   }
 });
+
+route.post("/deleted", async (req, res) => {
+  const id = await Shipping_address.findByPk(req.body.id);
+  if (id) {
+    try {
+      await Shipping_address.destroy({ where: { id: req.body.id } })
+      .then(() => {
+          res.status(200).send('successfully');
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+});
+
 module.exports = route;

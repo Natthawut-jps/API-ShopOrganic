@@ -4,9 +4,10 @@ const sequelize = new Sequelize({
     database: 'mydb',
     username: 'root',
     password: 'root',
-    dialect: 'sqlite',
-    storage: './model/DB/mydb.sqlite',
-    // timezone: '+07:00', // for mysql
+    dialect: 'mysql',
+    port: '3306',
+    // storage: './model/DB/mydb.sqlite',
+    timezone: '+07:00', // for mysql
 });
 
 module.exports = sequelize;
