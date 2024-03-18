@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 require('./model/Cart');
 require('./model/Favorite');
 require('./model/Order');
+require('./model/Order_Detail');
 require('./model/Products');
 require('./model/Shipping_address');
 require('./model/Current_address');

@@ -14,6 +14,7 @@ route.get('/cart', async (req, res, next) => {
 });
 route.post('/addTocart', async (req, res, next) => {
     const { id, name, price, categories, rating, uid, imgURL } = req.body;
+    console.log(req.user)
     if (req.body) {
         await Cart.create({
             name: name,
@@ -22,7 +23,7 @@ route.post('/addTocart', async (req, res, next) => {
             rating: rating,
             imgURL: 'Tometo.png',
             pid: id,
-            uid: uid
+            uid: req.user._uid
         }).then(async () => {
             res.send(await Cart.findAll())
         });

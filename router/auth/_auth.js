@@ -2,14 +2,15 @@ const express = require("express");
 const route = express.Router();
 
 // import chilren private
-const cart_favorite  = require('./CartandFavorite');
+const cart_favorite  = require('./cart_favorite');
 const address = require('./address');
 const userInfo = require('./userInfo');
+const orders = require('./orders');
 
 // private route authentication
-route.use('/CartAndFavorite', cart_favorite);
+route.use('/cart-favorite', cart_favorite);
 route.use('/address', address);
 route.use('/user', userInfo);
-
+route.use('/order', orders);
 
 module.exports = route;

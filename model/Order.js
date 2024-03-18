@@ -2,27 +2,26 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('./_Database_Connected');
 
 const Order = sequelize.define('order', {
-    product_name: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    price: {
-        type: DataTypes.DECIMAL(2),
-    },
+
     payment_menthod: {
         type: DataTypes.STRING,
         allowNull: true,
     },
     amount_total: {
-        type: DataTypes.DECIMAL(2),
+        type: DataTypes.DECIMAL(32,2),
         allowNull: true,
     },
     status: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: 0
     },
     quantity: {
         type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    user_id: {
+        type: DataTypes.STRING,
         allowNull: true,
     },
     address_id: {
