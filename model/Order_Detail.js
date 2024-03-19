@@ -20,6 +20,10 @@ const Order_Detail = sequelize.define('order_detail', {
         defaultValue: 1,
         allowNull: true,
     },
+    imgURL: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     p_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
