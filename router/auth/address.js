@@ -14,7 +14,7 @@ route.get("/all", async (req, res) => {
 route.post("/add", async (req, res) => {
   try {
     if (req.body && req.user) {
-      const all = await Shipping_address.findAll();
+      const address_user = await Shipping_address.findOne({ where: { email: req.user._uid }});
       const user = await Userinfo.findOne({ email: req.user._uid });
       if (user) {
         const address = await Shipping_address.create({
@@ -27,7 +27,7 @@ route.post("/add", async (req, res) => {
           zipCode: req.body.zipCode,
           email: req.user._uid,
           phone: req.body.phone,
-          status: all.length === 0 ? 1 : 0,
+          status: address_user ? 0 : 1,
         });
         return res.status(200).json(address);
       } else {

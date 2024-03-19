@@ -8,7 +8,6 @@ const { Userinfo } = require("../../model/Userinfo");
 route.post("/add", async (req, res) => {
   const cart = await Cart.findAll();
   const uid = await Userinfo.findOne({ where: { email: req.user._uid } });
-  console.log()
   await Order.create({
     payment_menthod: "QR Code PrompPay",
     amount_total: req.body.amount_total,
@@ -16,7 +15,7 @@ route.post("/add", async (req, res) => {
     reference: "SO" + String(uid.dataValues.id) + new Date().getTime(),
     address_id: req.body.address_id,
     user_id: req.user._uid,
-  }).then((response) => {
+  }).then(async (response) => {
     cart.map(async (item) => {
       await Order_Detail.create({
         name: item.name,
@@ -32,6 +31,31 @@ route.post("/add", async (req, res) => {
     Cart.truncate();
     res.status(200).json(response.dataValues.id);
   });
+});
+
+route.get("/get_order", async (req, res) => {
+  try {
+    await Order.findAll({ where: { user_id: req.user._uid } }).then(
+      (response) => {
+        res.status(200).json(response);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+route.post("/details", async (req, res) => {
+  try {
+    await Order_Detail.findAll({ where: { order_id: req.body.order_id } }).then(
+      (response) => {
+        console.log(response);
+        res.status(200).json(response);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = route;

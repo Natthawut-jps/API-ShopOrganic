@@ -33,7 +33,7 @@ const Order_Detail = sequelize.define('order_detail', {
         allowNull: false,
     },
     order_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
 
