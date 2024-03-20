@@ -16,20 +16,24 @@ route.post("/add", async (req, res) => {
     address_id: req.body.address_id,
     user_id: req.user._uid,
   }).then(async (response) => {
-    cart.map(async (item) => {
-      await Order_Detail.create({
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        categories: item.categories,
-        imgURL: "Tometo.png",
-        p_id: item.pid,
-        user_id: item.uid,
-        order_id: response.dataValues.id,
-      });
+    await Order_Detail.bulkCreate(
+      cart.map((item) => {
+        const obj = new Object({
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          categories: item.categories,
+          imgURL: "Tometo.png",
+          p_id: item.pid,
+          user_id: item.uid,
+          order_id: response.dataValues.id,
+        });
+        return obj;
+      })
+    ).then((response_2) => {
+      Cart.truncate();
+      res.status(200).json(response_2);
     });
-    Cart.truncate();
-    res.status(200).json(response.dataValues.id);
   });
 });
 
@@ -45,11 +49,10 @@ route.get("/get_order", async (req, res) => {
   }
 });
 
-route.post("/details", async (req, res) => {
+route.post("/active_order", async (req, res) => {
   try {
-    await Order_Detail.findAll({ where: { order_id: req.body.order_id } }).then(
+    await Order_Detail.findAll({ where: { user_id: req.user._uid, order_id: req.body.order_id } }).then(
       (response) => {
-        console.log(response);
         res.status(200).json(response);
       }
     );

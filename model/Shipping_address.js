@@ -35,7 +35,7 @@ const Shipping_address = sequelize.define("shipping_address", {
     allowNull: true,
   },
   phone: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   status: {

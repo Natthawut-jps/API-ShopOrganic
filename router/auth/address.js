@@ -10,11 +10,18 @@ route.get("/all", async (req, res) => {
   });
   res.status(200).json(address);
 });
-
+route.get("/active", async (req, res) => {
+  const address_active = await Shipping_address.findOne({
+    where: { email: req.user._uid, status: 1 },
+  });
+  res.status(200).json(address_active);
+});
 route.post("/add", async (req, res) => {
   try {
     if (req.body && req.user) {
-      const address_user = await Shipping_address.findOne({ where: { email: req.user._uid }});
+      const address_user = await Shipping_address.findOne({
+        where: { email: req.user._uid },
+      });
       const user = await Userinfo.findOne({ email: req.user._uid });
       if (user) {
         const address = await Shipping_address.create({
@@ -112,9 +119,9 @@ route.post("/deleted", async (req, res) => {
   const id = await Shipping_address.findByPk(req.body.id);
   if (id) {
     try {
-      await Shipping_address.destroy({ where: { id: req.body.id } })
-      .then(() => {
-          res.status(200).send('successfully');
+      await Shipping_address.destroy({ where: { id: req.body.id } }).then(
+        () => {
+          res.status(200).send("successfully");
         }
       );
     } catch (error) {
