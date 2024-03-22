@@ -2,6 +2,7 @@ const express = require("express");
 const route = express.Router();
 const upload = require("../upload");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const { Userinfo } = require("../../model/Userinfo");
 require("dotenv").config({ path: "../../.env.local" });
 const fs = require("fs");
@@ -31,7 +32,7 @@ route.post("/update", upload.single("profile"), async (req, res) => {
         },
         { where: { email: req.user._uid } }
       ).then(() => {
-        console.log(req.body)
+        console.log(req.body);
         if (req.body.imgURL !== "profile.jpg") {
           fs.unlink("./public/img/" + req.body.imgURL, (err) => {
             if (err) throw err;
@@ -83,4 +84,18 @@ route.post("/update", upload.single("profile"), async (req, res) => {
   }
 });
 
+route.post("/change_password", async (req, res) => {
+  const user = await Userinfo.findOne({ where: { email: req.user._uid } });
+  if (user) {
+    const pass = await bcrypt.compare(req.body.password_old, user.password);
+    if (pass) {
+      const password_hash = await bcrypt.hash(req.body.new_password, 10);
+      await Userinfo.update({ password: password_hash }, {where: { email: req.user._uid }}).then((success) => {
+        res.status(200).json('success');
+      });
+    } else {
+      res.status(201).json("incorrect password");
+    }
+  }
+});
 module.exports = route;

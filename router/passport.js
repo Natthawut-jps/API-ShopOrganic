@@ -22,12 +22,12 @@ passport.use(
         if (user) {
           if (await bcrypt.compare(password, user.password)) {
             const _ut = jwt.sign(
-              { _uid: user.id },
+              { _uid: user.email },
               process.env.DOTENV_JWT_UT,
               { algorithm: "HS384", expiresIn: "5m" }
             );
             const _ur = jwt.sign(
-              { _uid: user.id },
+              { _uid: user.email },
               process.env.DOTENV_JWT_UR,
               { algorithm: "HS384", expiresIn: "15d" }
             );

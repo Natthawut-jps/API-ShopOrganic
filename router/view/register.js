@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { Userinfo } = require("../../model/Userinfo");
 
-route.post("/usr", async (req, res) => {
+route.post("/username", async (req, res) => {
   try {
     if (req.body) {
       const user = await Userinfo.findOne({ where: { email: req.body.email } });
@@ -16,7 +16,7 @@ route.post("/usr", async (req, res) => {
           email: req.body.email,
           password: await bcrypt.hash(req.body.password, 10),
           accept: req.body.accept,
-          imgURL: req.body.imgURL,
+          imgURL: 'profile.jpg',
         });
         const _ut = jwt.sign(
           { _uid: req.body.email },
