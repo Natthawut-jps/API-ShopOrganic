@@ -38,10 +38,10 @@ const admin = require('./router/auth/admin/_auth_admin');
 app.use('/auth', passport.authenticate('auth_usp', { session: false }), auth);
 app.use('/admin', passport.authenticate('admin_auth_usp', { session: false }), admin);
 app.use('/refresh/r_auth', passport.authenticate("authorized", { session: false }), async (req, res) => {
-    res.status(200).json(req.user)
+    res.status(200).json(req.user);
 });
-app.use('/admin/refresh_token/', passport.authenticate("admin_authorized", { session: false }), async (req, res) => {
-    res.status(200).json(req.user)
+app.use('/admin_authRefreshToken/refresh_token', passport.authenticate("admin_authorized", { session: false }), async (req, res) => {
+    res.status(200).json(req.user);
 });
 
 // listen server

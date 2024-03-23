@@ -126,7 +126,7 @@ passport.use("admin_authorized",
             process.env.DOTENV_JWT_UT_ADMIN,
             {
               algorithm: "HS384",
-              expiresIn: "5m",
+              expiresIn: "3m",
             }
           );
           const _ur = jwt.sign(
@@ -134,7 +134,7 @@ passport.use("admin_authorized",
             process.env.DOTENV_JWT_UR_ADMIN,
             {
               algorithm: "HS384",
-              expiresIn: "15d",
+              expiresIn: "5d",
             }
           );
           return cb(null, { _ut: _ut, _ur: _ur });
