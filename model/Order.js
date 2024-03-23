@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("./_Database_Connected");
+const {sequelize} = require("./_Database_Connected");
 
 const Order = sequelize.define("order", {
   reference: {

@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("./_Database_Connected");
+const {sequelize} = require("./_Database_Connected");
 
 const Shipping_address = sequelize.define("shipping_address", {
   first_name: {

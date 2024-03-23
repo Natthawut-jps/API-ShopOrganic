@@ -16,19 +16,10 @@ route.post("/username", async (req, res) => {
           email: req.body.email,
           password: await bcrypt.hash(req.body.password, 10),
           accept: req.body.accept,
-          imgURL: 'profile.jpg',
+          imgURL: "profile.jpg",
+        }).then(() => {
+          res.status(200).json("successfully");
         });
-        const _ut = jwt.sign(
-          { _uid: req.body.email },
-          process.env.DOTENV_JWT_UT,
-          { algorithm: "HS384", expiresIn: "5m" }
-        );
-        const _ur = jwt.sign(
-          { _uid: req.body.email },
-          process.env.DOTENV_JWT_UR,
-          { algorithm: "HS384", expiresIn: "15d" }
-        );
-        return res.status(200).json({ _ut: _ut, _ur: _ur });
       } else {
         return res.status(401).send(" already have the account !to Login");
       }
@@ -52,7 +43,7 @@ route.post("/google", async (req, res) => {
           email: req.body.email,
           password: await bcrypt.hash(req.body.password, 10),
           accept: req.body.accept,
-          imgURL: 'profile.jpg',
+          imgURL: "profile.jpg",
         });
         const _ut = jwt.sign(
           { _uid: req.body.email },

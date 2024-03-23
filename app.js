@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
-// model
+// model Client-Side
 require('./model/Cart');
 require('./model/Favorite');
 require('./model/Order');
@@ -20,8 +20,10 @@ require('./model/Products');
 require('./model/Shipping_address');
 require('./model/Current_address');
 require('./model/Userinfo');
-require('./model/Admin');
 require('./model/Transaction');
+// model Server-Side
+require('./model/admin/Admin');
+require('./model/admin/Categories');
 
 // import route
 const publict = require('./router/view/_public');
@@ -31,10 +33,14 @@ app.use('/public', publict);
 
 // import private route
 const auth = require('./router/auth/_auth');
-
+const admin = require('./router/auth/admin/_auth_admin');
 // private route
 app.use('/auth', passport.authenticate('auth_usp', { session: false }), auth);
+app.use('/admin', passport.authenticate('admin_auth_usp', { session: false }), admin);
 app.use('/refresh/r_auth', passport.authenticate("authorized", { session: false }), async (req, res) => {
+    res.status(200).json(req.user)
+});
+app.use('/admin/refresh_token/', passport.authenticate("admin_authorized", { session: false }), async (req, res) => {
     res.status(200).json(req.user)
 });
 

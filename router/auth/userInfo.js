@@ -32,7 +32,6 @@ route.post("/update", upload.single("profile"), async (req, res) => {
         },
         { where: { email: req.user._uid } }
       ).then(() => {
-        console.log(req.body);
         if (req.body.imgURL !== "profile.jpg") {
           fs.unlink("./public/img/" + req.body.imgURL, (err) => {
             if (err) throw err;
