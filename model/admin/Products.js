@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("./_Database_Connected");
+const { server_sequelize } = require("../_Database_Connected");
 
-const Product = sequelize.define(
+const Product = server_sequelize.define(
   "produst",
   {
     name: {
@@ -9,7 +9,7 @@ const Product = sequelize.define(
       allowNull: true,
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(32,2),
       allowNull: true,
     },
     categories: {
@@ -42,7 +42,7 @@ const Product = sequelize.define(
   { createdAt: true, updatedAt: true, timestamps: true }
 );
 (async () => {
-  await sequelize.sync({ force: false });
+  await server_sequelize.sync({ force: false });
 })();
 
 module.exports = { Product };

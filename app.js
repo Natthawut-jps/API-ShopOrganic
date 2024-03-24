@@ -16,7 +16,7 @@ require('./model/Cart');
 require('./model/Favorite');
 require('./model/Order');
 require('./model/Order_Detail');
-require('./model/Products');
+require('./model/admin/Products');
 require('./model/Shipping_address');
 require('./model/Current_address');
 require('./model/Userinfo');

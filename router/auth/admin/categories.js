@@ -1,7 +1,6 @@
 const express = require("express");
 const route = express.Router();
 const upload = require("../../upload");
-const path = require("path");
 const { Categories } = require("../../../model/admin/Categories");
 
 route.get('/get_data', async (req, res) => {
