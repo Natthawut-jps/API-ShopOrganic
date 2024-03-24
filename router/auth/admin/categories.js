@@ -22,7 +22,7 @@ route.post("/add", upload.single("category_image"), async (req, res) => {
       res.status(200).json("successfully");
     });
   } else {
-    res.status(201).json("categories name aledy change name other");
+    res.status(201).json('"categories has this name already exists"');
   }
 });
 
