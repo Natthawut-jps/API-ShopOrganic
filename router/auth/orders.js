@@ -8,10 +8,12 @@ const { Userinfo } = require("../../model/Userinfo");
 route.post("/add", async (req, res) => {
   const cart = await Cart.findAll();
   const uid = await Userinfo.findOne({ where: { email: req.user._uid } });
+  const customer_name = uid.dataValues.first_name + ' ' + uid.dataValues.last_name
   await Order.create({
     payment_menthod: "QR Code PrompPay",
     amount_total: req.body.amount_total,
     quantity: req.body.quantity,
+    customer_name: customer_name,
     reference: "SO" + String(uid.dataValues.id) + new Date().getTime(),
     address_id: req.body.address_id,
     user_id: req.user._uid,

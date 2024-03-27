@@ -21,7 +21,7 @@ const server_sequelize = new Sequelize({
     password: 'root',
     dialect: 'mysql',
     port: '3306',
-    // storage: './model/DB/mydb.sqlite',
+    // storage: './model/DB/mydb_admin.sqlite',
     timezone: '+07:00', // for mysql
 });
 module.exports['server_sequelize'] = server_sequelize;

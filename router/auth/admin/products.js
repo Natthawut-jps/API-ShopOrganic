@@ -3,6 +3,13 @@ const route = express.Router();
 const upload = require("../../upload");
 const { Product } = require("../../../model/admin/Products");
 
+
+
+route.get('/get_products', async (req, res) => {
+  await Product.findAll().then((response) => {
+    res.status(200).json(response);
+  })
+})
 route.post("/add", upload.single('product_image'), async (req, res) => {
   if (req.body && req.file) {
     const products = await Product.findOne({ where: { name: req.body.name } });
