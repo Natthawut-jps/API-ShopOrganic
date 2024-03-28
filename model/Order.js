@@ -36,7 +36,18 @@ const Order = sequelize.define("order", {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-});
+  createdAt: {
+    field: 'createdAt',
+    allowNull: false,
+    type: DataTypes.DATEONLY
+  },
+  updatedAt: {
+    field: 'updatedAt',
+    allowNull: false,
+    type: DataTypes.DATEONLY
+  }
+}
+);
 (async () => {
   await sequelize.sync({ force: false });
 })();

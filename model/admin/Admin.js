@@ -10,6 +10,16 @@ const Admin = server_sequelize.define('admin', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    createdAt: {
+        field: 'createdAt',
+        allowNull: false,
+        type: DataTypes.DATEONLY
+      },
+      updatedAt: {
+        field: 'updatedAt',
+        allowNull: false,
+        type: DataTypes.DATEONLY
+      }
 });
 
 (async () => {

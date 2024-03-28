@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const {sequelize} = require("./_Database_Connected");
+const { sequelize } = require("./_Database_Connected");
 
 const Shipping_address = sequelize.define("shipping_address", {
   first_name: {
@@ -41,7 +41,17 @@ const Shipping_address = sequelize.define("shipping_address", {
   status: {
     type: DataTypes.INTEGER,
     allowNull: false,
-  }
+  },
+  createdAt: {
+    field: "createdAt",
+    allowNull: false,
+    type: DataTypes.DATEONLY,
+  },
+  updatedAt: {
+    field: "updatedAt",
+    allowNull: false,
+    type: DataTypes.DATEONLY,
+  },
 });
 
 (async () => {

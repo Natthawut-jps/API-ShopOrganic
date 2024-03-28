@@ -23,12 +23,12 @@ passport.use(
         if (user) {
           if (await bcrypt.compare(password, user.password)) {
             const _ut = jwt.sign(
-              { _uid: user.email },
+              { _uid: user.dataValues.email },
               process.env.DOTENV_JWT_UT,
               { algorithm: "HS384", expiresIn: "5m" }
             );
             const _ur = jwt.sign(
-              { _uid: user.email },
+              { _uid: user.dataValues.email },
               process.env.DOTENV_JWT_UR,
               { algorithm: "HS384", expiresIn: "15d" }
             );
@@ -55,12 +55,12 @@ passport.use(
         if (admin) {
           if (await bcrypt.compare(password, admin.password)) {
             const _ut = jwt.sign(
-              { _uid: admin.username },
+              { _uid: admin.dataValues.username },
               process.env.DOTENV_JWT_UT_ADMIN,
               { algorithm: "HS384", expiresIn: "3m" }
             );
             const _ur = jwt.sign(
-              { _uid: admin.username },
+              { _uid: admin.dataValues.username },
               process.env.DOTENV_JWT_UR_ADMIN,
               { algorithm: "HS384", expiresIn: "5d" }
             );
