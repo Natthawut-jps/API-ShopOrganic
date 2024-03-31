@@ -8,7 +8,7 @@ route.post("/admin", async (req, res, next) => {
     { session: false },
     async (err, user) => {
       try {
-        if (user._ut && user._ur) {
+        if (user._uta && user._ura) {
           return res.status(200).json(user);
         } else {
           res.status(401).send(err);

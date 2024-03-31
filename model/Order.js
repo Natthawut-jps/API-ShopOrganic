@@ -1,11 +1,16 @@
 const { DataTypes } = require("sequelize");
-const {sequelize} = require("./_Database_Connected");
+const { sequelize } = require("./_Database_Connected");
 
 const Order = sequelize.define("order", {
   reference: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+  },
+  tracking_id: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    unique: true
   },
   payment_menthod: {
     type: DataTypes.STRING,
@@ -18,7 +23,7 @@ const Order = sequelize.define("order", {
   status: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: 1,
   },
   quantity: {
     type: DataTypes.INTEGER,
@@ -26,7 +31,7 @@ const Order = sequelize.define("order", {
   },
   customer_name: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   user_id: {
     type: DataTypes.STRING,
@@ -37,17 +42,16 @@ const Order = sequelize.define("order", {
     allowNull: true,
   },
   createdAt: {
-    field: 'createdAt',
+    field: "createdAt",
     allowNull: false,
-    type: DataTypes.DATEONLY
+    type: DataTypes.DATEONLY,
   },
   updatedAt: {
-    field: 'updatedAt',
+    field: "updatedAt",
     allowNull: false,
-    type: DataTypes.DATEONLY
-  }
-}
-);
+    type: DataTypes.DATEONLY,
+  },
+});
 (async () => {
   await sequelize.sync({ force: false });
 })();

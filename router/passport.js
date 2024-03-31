@@ -54,17 +54,17 @@ passport.use(
         const admin = await Admin.findOne({ where: { username: username } });
         if (admin) {
           if (await bcrypt.compare(password, admin.password)) {
-            const _ut = jwt.sign(
-              { _uid: admin.dataValues.username },
+            const _uta = jwt.sign(
+              { _uida: admin.dataValues.username },
               process.env.DOTENV_JWT_UT_ADMIN,
               { algorithm: "HS384", expiresIn: "3m" }
             );
-            const _ur = jwt.sign(
-              { _uid: admin.dataValues.username },
+            const _ura = jwt.sign(
+              { _uida: admin.dataValues.username },
               process.env.DOTENV_JWT_UR_ADMIN,
               { algorithm: "HS384", expiresIn: "5d" }
             );
-            return cb(null, { _ut: _ut, _ur: _ur });
+            return cb(null, { _uta: _uta, _ura: _ura });
           } else {
             cb(" Incorrect password");
           }
@@ -121,23 +121,23 @@ passport.use("admin_authorized",
     async (payload, cb) => {
       try {
         if (payload) {
-          const _ut = jwt.sign(
-            { _uid: payload._uid },
+          const _uta = jwt.sign(
+            { _uida: payload._uida },
             process.env.DOTENV_JWT_UT_ADMIN,
             {
               algorithm: "HS384",
               expiresIn: "3m",
             }
           );
-          const _ur = jwt.sign(
-            { _uid: payload._uid },
+          const _ura = jwt.sign(
+            { _uida: payload._uida },
             process.env.DOTENV_JWT_UR_ADMIN,
             {
               algorithm: "HS384",
               expiresIn: "5d",
             }
           );
-          return cb(null, { _ut: _ut, _ur: _ur });
+          return cb(null, { _uta: _uta, _ura: _ura });
         } else {
           return cb(null, false, { massage: " error please you login again!!" });
         }

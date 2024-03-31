@@ -34,7 +34,7 @@ const Product = server_sequelize.define("produst", {
   status: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    defaultValue: 0,
+    defaultValue: 1,
   },
   createdAt: {
     field: "createdAt",

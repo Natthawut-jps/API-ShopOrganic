@@ -51,9 +51,21 @@ route.get("/get_order", async (req, res) => {
   }
 });
 
-route.post("/active_order", async (req, res) => {
+route.get("/order_view_active", async (req, res) => {
   try {
-    await Order_Detail.findAll({ where: { user_id: req.user._uid, order_id: req.body.order_id } }).then(
+    await Order.findOne({ where: {  user_id: req.user._uid, id: req.query.order_id } }).then(
+      (response) => {
+        res.status(200).json(response);
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+route.get("/active_order", async (req, res) => {
+  try {
+    await Order_Detail.findAll({ where: { user_id: req.user._uid, order_id: req.query.order_id } }).then(
       (response) => {
         res.status(200).json(response);
       }
