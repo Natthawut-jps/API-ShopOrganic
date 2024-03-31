@@ -3,11 +3,11 @@ const route = express.Router();
 const upload = require("../../upload");
 const { Categories } = require("../../../model/admin/Categories");
 
-route.get('/get_data', async (req, res) => {
+route.get("/get_data", async (req, res) => {
   await Categories.findAll().then((response) => {
     res.status(200).json(response);
   });
-})
+});
 route.post("/add", upload.single("category_image"), async (req, res) => {
   const category = await Categories.findOne({
     where: { category_name: req.body.category_name },

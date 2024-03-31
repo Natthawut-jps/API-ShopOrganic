@@ -11,6 +11,11 @@ const Categories = server_sequelize.define("categories", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  quantity: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0
+  },
   imgURL: {
     type: DataTypes.STRING,
     allowNull: true,
