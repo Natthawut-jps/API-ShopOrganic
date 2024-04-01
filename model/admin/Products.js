@@ -28,16 +28,17 @@ const Product = server_sequelize.define("produst", {
   },
   rating: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
     defaultValue: 0,
   },
   sold: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false,
+    defaultValue: 0
   },
   status: {
     type: DataTypes.INTEGER,
-    allowNull: true,
+    allowNull: false,
     defaultValue: 1,
   },
   createdAt: {

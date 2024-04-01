@@ -1,7 +1,7 @@
 const express = require("express");
 const route = express.Router();
 const { Order } = require("../../../model/Order");
-const { Order_Detail } = require("../../../model/Order_Detail");
+const { Categories } = require("../../../model/admin/Categories");
 const { Product } = require("../../../model/admin/Products");
 
 route.get("/sales", async (req, res) => {
@@ -128,15 +128,24 @@ route.get("/sales", async (req, res) => {
 
 route.get("/top_of_month", async (req, res) => {
   try {
-    const order_detail = await Product.findAll();
-    if (order_detail) {
-      const top_month = order_detail.filter(
+    const product = await Product.findAll();
+    const category = await Categories.findAll();
+    if (product && category) {
+      const top_month_product = product.filter(
         (item) =>
           new Date(item.createdAt).toISOString().slice(5, 7) ===
           new Date().toISOString().slice(5, 7)
       );
-      if (top_month) {
-        res.status(200).json(top_month);
+      const top_month_category = category.filter(
+        (item) =>
+          new Date(item.createdAt).toISOString().slice(5, 7) ===
+          new Date().toISOString().slice(5, 7)
+      );
+      if (top_month_category && top_month_product) {
+        res.status(200).json({
+          categories_top: top_month_category,
+          product_top: top_month_product,
+        });
       }
     }
   } catch (error) {

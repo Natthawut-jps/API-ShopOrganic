@@ -14,7 +14,9 @@ route.post("/change_status", async (req, res) => {
       where: { tracking_id: req.body.tracking_id },
     });
     if (
+      tracking &&
       tracking.dataValues.id === req.body.order_id &&
+      tracking &&
       tracking.dataValues.tracking_id === req.body.tracking_id
     ) {
       if (req.body.status && req.body.tracking_id && req.body.order_id) {

@@ -5,6 +5,7 @@ const { Order_Detail } = require("../../model/Order_Detail");
 const { Order } = require("../../model/Order");
 const { Userinfo } = require("../../model/Userinfo");
 const { Product } = require("../../model/admin/Products");
+const { Categories } = require("../../model/admin/Categories");
 
 route.post("/add", async (req, res) => {
   const cart = await Cart.findAll();
@@ -36,17 +37,36 @@ route.post("/add", async (req, res) => {
       })
     ).then(async (response_2) => {
       if (response_2) {
-        response_2.map(async (item) => {
-          const product = await Product.findByPk(item.product_id);
-          await Product.update(
-            {
-              sold: item.quantity,
-              quantity: product.dataValues.quantity - item.quantity,
-            },
-            {
-              where: { id: item.product_id },
-            }
-          );
+        Promise.all(
+          response_2.map(async (item) => {
+            const product = await Product.findByPk(item.product_id);
+            await Product.update(
+              {
+                sold: product.dataValues.sold + item.quantity,
+                quantity: product.dataValues.quantity - item.quantity,
+              },
+              {
+                where: { id: item.product_id },
+              }
+            );
+          })
+        ).then(async () => {
+          const product = await Product.findAll();
+          const category = await Categories.findAll();
+          category.map(async (item_1) => {
+            await Categories.update(
+              {
+                sold: product
+                  .filter(
+                    (item_2) => item_2.categories === item_1.category_name
+                  )
+                  .reduce((acumulate, current) => acumulate + current.sold, 0),
+              },
+              {
+                where: { category_name: item_1.category_name },
+              }
+            );
+          });
         });
       }
       Cart.truncate();
