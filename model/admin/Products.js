@@ -31,6 +31,10 @@ const Product = server_sequelize.define("produst", {
     allowNull: true,
     defaultValue: 0,
   },
+  sold: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
   status: {
     type: DataTypes.INTEGER,
     allowNull: true,

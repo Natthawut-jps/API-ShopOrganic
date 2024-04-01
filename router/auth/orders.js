@@ -4,11 +4,13 @@ const { Cart } = require("../../model/Cart");
 const { Order_Detail } = require("../../model/Order_Detail");
 const { Order } = require("../../model/Order");
 const { Userinfo } = require("../../model/Userinfo");
+const { Product } = require("../../model/admin/Products");
 
 route.post("/add", async (req, res) => {
   const cart = await Cart.findAll();
   const uid = await Userinfo.findOne({ where: { email: req.user._uid } });
-  const customer_name = uid.dataValues.first_name + ' ' + uid.dataValues.last_name
+  const customer_name =
+    uid.dataValues.first_name + " " + uid.dataValues.last_name;
   await Order.create({
     payment_menthod: "QR Code PrompPay",
     amount_total: req.body.amount_total,
@@ -25,14 +27,28 @@ route.post("/add", async (req, res) => {
           price: item.price,
           quantity: item.quantity,
           categories: item.categories,
-          imgURL: "Tometo.png",
-          p_id: item.pid,
+          imgURL: item.imgURL,
+          product_id: item.pid,
           user_id: item.uid,
           order_id: response.dataValues.id,
         });
         return obj;
       })
-    ).then((response_2) => {
+    ).then(async (response_2) => {
+      if (response_2) {
+        response_2.map(async (item) => {
+          const product = await Product.findByPk(item.product_id);
+          await Product.update(
+            {
+              sold: item.quantity,
+              quantity: product.dataValues.quantity - item.quantity,
+            },
+            {
+              where: { id: item.product_id },
+            }
+          );
+        });
+      }
       Cart.truncate();
       res.status(200).json(response_2);
     });
@@ -53,11 +69,11 @@ route.get("/get_order", async (req, res) => {
 
 route.get("/order_view_active", async (req, res) => {
   try {
-    await Order.findOne({ where: {  user_id: req.user._uid, id: req.query.order_id } }).then(
-      (response) => {
-        res.status(200).json(response);
-      }
-    );
+    await Order.findOne({
+      where: { user_id: req.user._uid, id: req.query.order_id },
+    }).then((response) => {
+      res.status(200).json(response);
+    });
   } catch (error) {
     console.log(error);
   }
@@ -65,11 +81,11 @@ route.get("/order_view_active", async (req, res) => {
 
 route.get("/active_order", async (req, res) => {
   try {
-    await Order_Detail.findAll({ where: { user_id: req.user._uid, order_id: req.query.order_id } }).then(
-      (response) => {
-        res.status(200).json(response);
-      }
-    );
+    await Order_Detail.findAll({
+      where: { user_id: req.user._uid, order_id: req.query.order_id },
+    }).then((response) => {
+      res.status(200).json(response);
+    });
   } catch (error) {
     console.log(error);
   }

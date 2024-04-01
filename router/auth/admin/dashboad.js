@@ -1,10 +1,14 @@
 const express = require("express");
 const route = express.Router();
 const { Order } = require("../../../model/Order");
+const { Order_Detail } = require("../../../model/Order_Detail");
+const { Product } = require("../../../model/admin/Products");
 
 route.get("/sales", async (req, res) => {
   const order = await Order.findAll();
-  const year = order.map((item) => item.createdAt.slice(0, 4) === req.query.year);
+  const year = order.map(
+    (item) => item.createdAt.slice(0, 4) === req.query.year
+  );
   if (year) {
     if (order) {
       const data = {
@@ -119,6 +123,24 @@ route.get("/sales", async (req, res) => {
       };
       return res.status(200).json(data);
     }
+  }
+});
+
+route.get("/top_of_month", async (req, res) => {
+  try {
+    const order_detail = await Product.findAll();
+    if (order_detail) {
+      const top_month = order_detail.filter(
+        (item) =>
+          new Date(item.createdAt).toISOString().slice(5, 7) ===
+          new Date().toISOString().slice(5, 7)
+      );
+      if (top_month) {
+        res.status(200).json(top_month);
+      }
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 

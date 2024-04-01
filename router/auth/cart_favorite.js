@@ -21,7 +21,7 @@ route.post('/addTocart', async (req, res, next) => {
             price: price,
             categories: categories,
             rating: rating,
-            imgURL: 'Tometo.png',
+            imgURL: req.body.imgURL,
             pid: id,
             uid: req.user._uid
         }).then(async () => {
@@ -36,7 +36,7 @@ route.post('/increase', async (req, res, next) => {
     const data = await Cart.findOne({ where: { pid: pid } });
     if (data) {
         await Cart.update({
-            price: data.dataValues.price + price,
+            price: data.dataValues.price + parseInt(price),
             quantity: data.dataValues.quantity + 1,
         }, {
             where: {
