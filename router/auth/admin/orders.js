@@ -1,6 +1,8 @@
 const express = require("express");
 const route = express.Router();
 const { Order } = require("../../../model/Order");
+const { Order_Detail } = require("../../../model/Order_Detail");
+const { Shipping_address } = require("../../..//model/Shipping_address");
 
 route.get("/get_orders", async (req, res) => {
   await Order.findAll().then((response) => {
@@ -52,4 +54,23 @@ route.post("/change_status", async (req, res) => {
   }
 });
 
+route.get("/address", async (req, res) => {
+  try {
+    await Shipping_address.findByPk(req.query.id).then((response) => {
+      res.status(200).json(response);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+route.get("/order_detail", async (req, res) => {
+  try {
+    await Order_Detail.findAll({ where: { order_id: req.query.id }}).then((response) => {
+      res.status(200).json(response);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = route;

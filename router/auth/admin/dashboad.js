@@ -3,6 +3,7 @@ const route = express.Router();
 const { Order } = require("../../../model/Order");
 const { Categories } = require("../../../model/admin/Categories");
 const { Product } = require("../../../model/admin/Products");
+const { Userinfo } = require("../../../model/Userinfo");
 
 route.get("/sales", async (req, res) => {
   const order = await Order.findAll();
@@ -153,4 +154,20 @@ route.get("/top_of_month", async (req, res) => {
   }
 });
 
+route.get("/total", async (req, res) => {
+  try {
+    const order = await Order.findAll();
+    const customer = await Userinfo.findAll();
+    const productss = await Product.findAll();
+    if (order && customer && productss) {
+      res.status(200).json({
+        order_total: order.length,
+        customer_total: customer.length,
+        product_total: productss.length,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
 module.exports = route;
