@@ -13,7 +13,7 @@ route.get('/cart', async (req, res, next) => {
     }
 });
 route.post('/addTocart', async (req, res, next) => {
-    const { id, name, price, categories, rating, uid, imgURL } = req.body;
+    const { id, name, price, categories, rating } = req.body;
     console.log(req.user)
     if (req.body) {
         await Cart.create({
