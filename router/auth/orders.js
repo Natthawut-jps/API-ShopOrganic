@@ -111,4 +111,13 @@ route.get("/active_order", async (req, res) => {
   }
 });
 
+route.post("/cancled", async (req, res) => {
+  const order_cancle = await Order.update(
+    { status: 9 },
+    { where: { id: req.body.id_order } }
+  );
+  if (order_cancle) {
+    res.status(200).json("successfully");
+  }
+});
 module.exports = route;

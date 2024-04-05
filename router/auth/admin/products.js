@@ -141,9 +141,16 @@ route.post("/edit", upload.single("imgURL"), async (req, res) => {
 
 route.post("/deleted", async (req, res) => {
   try {
-    const product = await Product.findByPk(req.body.id);
-    if (product) {
-      await Product.destroy({ where: { id: req.body.id } }).then(() => {
+    const product = await Product.findOne({ where: { id: req.body.id } });
+    const categorys = await Categories.findOne({
+      where: { category_name: product.dataValues.categories },
+    });
+    if (product && categorys) {
+      await Categories.update(
+        { quantity: categorys.dataValues.quantity - 1 },
+        { where: { category_name: product.dataValues.categories } }
+      ).then(async () => {
+        await Product.destroy({ where: { id: req.body.id } });
         res.status(200).json("successfully");
       });
     } else {
