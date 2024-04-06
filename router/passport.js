@@ -13,8 +13,8 @@ passport.use(
   "login_username",
   new LocalStrategy(
     {
-      usernameField: 'email',
-      passwordField: 'password',
+      usernameField: "email",
+      passwordField: "password",
       session: false,
     },
     async (email, password, cb) => {
@@ -37,7 +37,9 @@ passport.use(
             cb(" Incorrect password");
           }
         } else {
-          return cb(null, false,{ massage:  " username and password Incorrect !New create Account" });
+          return cb(null, false, {
+            massage: " username and password Incorrect !New create Account",
+          });
         }
       } catch (error) {
         cb(error, null);
@@ -48,28 +50,51 @@ passport.use(
 // admin Login
 passport.use(
   "admin_login",
-  new LocalStrategy(
-    async (username, password, cb) => {
-      try {
-        const admin = await Admin.findOne({ where: { username: username } });
-        if (admin) {
-          if (await bcrypt.compare(password, admin.password)) {
-            const _uta = jwt.sign(
-              { _uida: admin.dataValues.username },
-              process.env.DOTENV_JWT_UT_ADMIN,
-              { algorithm: "HS384", expiresIn: "3m" }
-            );
-            const _ura = jwt.sign(
-              { _uida: admin.dataValues.username },
-              process.env.DOTENV_JWT_UR_ADMIN,
-              { algorithm: "HS384", expiresIn: "5d" }
-            );
-            return cb(null, { _uta: _uta, _ura: _ura });
-          } else {
-            cb(" Incorrect password");
-          }
+  new LocalStrategy(async (username, password, cb) => {
+    try {
+      const admin = await Admin.findOne({ where: { username: username } });
+      if (admin) {
+        if (await bcrypt.compare(password, admin.password)) {
+          const _uta = jwt.sign(
+            { _uida: admin.dataValues.username },
+            process.env.DOTENV_JWT_UT_ADMIN,
+            { algorithm: "HS384", expiresIn: "3m" }
+          );
+          const _ura = jwt.sign(
+            { _uida: admin.dataValues.username },
+            process.env.DOTENV_JWT_UR_ADMIN,
+            { algorithm: "HS384", expiresIn: "5d" }
+          );
+          return cb(null, { _uta: _uta, _ura: _ura });
         } else {
-          return cb(null, false,{ massage:  " username and password Incorrect !New create Account" });
+          cb(" Incorrect password");
+        }
+      } else {
+        return cb(null, false, {
+          massage: " username and password Incorrect !New create Account",
+        });
+      }
+    } catch (error) {
+      cb(error, null);
+    }
+  })
+);
+// authentication endpoint at Authorize
+passport.use(
+  "auth_usp",
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: process.env.DOTENV_JWT_UT,
+    },
+    async (payload, cb) => {
+      try {
+        if (payload) {
+          return cb(null, payload);
+        } else {
+          return cb(null, false, {
+            massage: " error payload null or undefind incorrect",
+          });
         }
       } catch (error) {
         cb(error, null);
@@ -77,46 +102,36 @@ passport.use(
     }
   )
 );
-// authentication endpoint at Authorize
-passport.use('auth_usp', new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.DOTENV_JWT_UT
-},
-async( payload, cb ) => {
-    try {
-        if( payload ) {
-            return cb(null, payload );
-        } else {
-            return cb(null, false, { massage: ' error payload null or undefind incorrect' });
-        };
-    } catch( error ) {
-        cb( error, null );
-    };
-}
-));
-passport.use('admin_auth_usp', new JwtStrategy({
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.DOTENV_JWT_UT_ADMIN
-},
-async( payload, cb ) => {
-  try {
-      if( payload ) {
-          return cb(null, payload );
-      } else {
-          return cb(null, false, { massage: ' error payload null or undefind incorrect' });
-      };
-  } catch( error ) {
-      cb( error, null );
-  };
-}
-));
-
-// auth profiles user data store private
-passport.use("admin_authorized",
+passport.use(
+  "admin_auth_usp",
   new JwtStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.DOTENV_JWT_UR_ADMIN
+      secretOrKey: process.env.DOTENV_JWT_UT_ADMIN,
+    },
+    async (payload, cb) => {
+      try {
+        if (payload) {
+          return cb(null, payload);
+        } else {
+          return cb(null, false, {
+            massage: " error payload null or undefind incorrect",
+          });
+        }
+      } catch (error) {
+        cb(error, null);
+      }
+    }
+  )
+);
+
+// auth profiles user data store private
+passport.use(
+  "admin_authorized",
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: process.env.DOTENV_JWT_UR_ADMIN,
     },
     async (payload, cb) => {
       try {
@@ -139,7 +154,9 @@ passport.use("admin_authorized",
           );
           return cb(null, { _uta: _uta, _ura: _ura });
         } else {
-          return cb(null, false, { massage: " error please you login again!!" });
+          return cb(null, false, {
+            massage: " error please you login again!!",
+          });
         }
       } catch (error) {
         cb(error, false);
@@ -148,11 +165,12 @@ passport.use("admin_authorized",
   )
 );
 
-passport.use("authorized",
+passport.use(
+  "authorized",
   new JwtStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.DOTENV_JWT_UR
+      secretOrKey: process.env.DOTENV_JWT_UR,
     },
     async (payload, cb) => {
       try {
@@ -175,10 +193,35 @@ passport.use("authorized",
           );
           return cb(null, { _ut: _ut, _ur: _ur });
         } else {
-          return cb(null, false, { massage: " error please you login again!!" });
+          return cb(null, false, {
+            massage: " error please you login again!!",
+          });
         }
       } catch (error) {
         cb(error, false);
+      }
+    }
+  )
+);
+
+passport.use(
+  "reset_password_new",
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: process.env.DOTENV_JWT_RESET_PASSWORD,
+    },
+    async (payload, cb) => {
+      try {
+        if (payload) {
+          return cb(null, payload);
+        } else {
+          return cb(null, false, {
+            massage: " error payload null or undefind incorrect",
+          });
+        }
+      } catch (error) {
+        cb(error, null);
       }
     }
   )

@@ -43,6 +43,7 @@ route.post("/google", async (req, res) => {
           email: req.body.email,
           password: await bcrypt.hash(req.body.password, 10),
           accept: req.body.accept,
+          gmail: 1,
           imgURL: "profile.jpg",
         });
         const _ut = jwt.sign(

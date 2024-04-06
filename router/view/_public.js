@@ -9,6 +9,7 @@ const admin_login = require('./admin_login');
 const admin_register = require('./admin_register');
 const products = require('./product');
 const categories = require('./categories');
+const reset_password = require('./reset_password');
 
 route.use('/register', register);
 route.use('/login', logins);
@@ -16,5 +17,6 @@ route.use('/admin_login', admin_login);
 route.use('/admin_register', admin_register);
 route.use('/products', products);
 route.use('/categories', categories);
+route.use('/reset_password', reset_password);
 
 module.exports = route;

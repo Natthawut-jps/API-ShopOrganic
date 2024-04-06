@@ -55,6 +55,9 @@ app.use(
   }
 );
 
+const reset_password = require('./router/auth/password_reset');
+app.use("/reset_password", passport.authenticate("reset_password_new", { session: false }), reset_password);
+
 // listen server
 app.listen(process.env.DOTENV_PORT, () => {
   console.log(`successfully a port ${process.env.DOTENV_PORT}`);

@@ -27,6 +27,11 @@ const Userinfo = sequelize.define("userinfo", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  gmail: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
   createdAt: {
     field: "createdAt",
     allowNull: false,
