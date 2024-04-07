@@ -6,7 +6,8 @@ const sequelize = new Sequelize({
     database: 'shops',
     username: 'root',
     password: 'root',
-    dialect: 'mysql',
+    // dialect: 'mysql',
+    dialect: 'sqlite',
     port: '3306',
     storage: './model/DB/client.sqlite',
     // timezone: '+07:00', // for mysql
@@ -19,7 +20,8 @@ const server_sequelize = new Sequelize({
     database: 'admin',
     username: 'root',
     password: 'root',
-    dialect: 'mysql',
+    // dialect: 'mysql',
+    dialect: 'sqlite',
     port: '3306',
     storage: './model/DB/server.sqlite',
     // timezone: '+07:00', // for mysql
