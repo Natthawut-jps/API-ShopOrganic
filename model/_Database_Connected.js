@@ -4,11 +4,11 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize({
     host: 'localhost',
     database: 'shops',
-    username: 'root',
-    password: 'root',
+    // username: 'root',
+    // password: 'root',
     // dialect: 'mysql',
     dialect: 'sqlite',
-    port: '3306',
+    // port: '3306',
     storage: './model/DB/client.sqlite',
     // timezone: '+07:00', // for mysql
 });
@@ -18,11 +18,11 @@ module.exports['sequelize'] = sequelize;
 const server_sequelize = new Sequelize({
     host: 'localhost',
     database: 'admin',
-    username: 'root',
-    password: 'root',
+    // username: 'root',
+    // password: 'root',
     // dialect: 'mysql',
     dialect: 'sqlite',
-    port: '3306',
+    // port: '3306',
     storage: './model/DB/server.sqlite',
     // timezone: '+07:00', // for mysql
 });
