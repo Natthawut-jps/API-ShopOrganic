@@ -9,7 +9,7 @@ route.post("/admin", async (req, res, next) => {
     async (err, user) => {
       try {
         if (user._uta && user._ura) {
-          return res.status(200).json(user);
+          res.status(200).json(user);
         } else {
           res.status(401).send(err);
         }
