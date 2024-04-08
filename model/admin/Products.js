@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
-const { server_sequelize } = require("../_Database_Connected");
+const { sequelize } = require("../_Database_Connected");
 
-const Product = server_sequelize.define("produst", {
+const Product = sequelize.define("produst", {
   name: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -53,7 +53,7 @@ const Product = server_sequelize.define("produst", {
   },
 });
 (async () => {
-  await server_sequelize.sync({ force: false });
+  await sequelize.sync({ force: false });
 })();
 
 module.exports = { Product };

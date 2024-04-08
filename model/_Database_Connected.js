@@ -1,32 +1,12 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
 // Client-Side
 const sequelize = new Sequelize({
-    host: 'localhost',
-    database: 'shops',
-    // username: 'root',
-    // password: 'root',
-    // dialect: 'mysql',
-    dialect: 'sqlite',
-    // port: '3306',
-    storage: './model/DB/client.sqlite',
-    // timezone: '+07:00', // for mysql
+  host: "dpg-co9kl04f7o1s739aadtg-a",
+  database: "shops_yjan",
+  username: 'shops_yjan_user',
+  password: 'iW8qTfq9RbhudhrzKwiSVPyYHonBjI1a',
+  dialect: "postgres",
+  port: '5432',
 });
-module.exports['sequelize'] = sequelize;
-
-// Admin-Side
-const server_sequelize = new Sequelize({
-    host: 'localhost',
-    database: 'admin',
-    // username: 'root',
-    // password: 'root',
-    // dialect: 'mysql',
-    dialect: 'sqlite',
-    // port: '3306',
-    storage: './model/DB/server.sqlite',
-    // timezone: '+07:00', // for mysql
-});
-module.exports['server_sequelize'] = server_sequelize;
-
-
-
+module.exports["sequelize"] = sequelize;
