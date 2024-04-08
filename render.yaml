@@ -1,0 +1,12 @@
+# Exported from Render on 2024-04-08T09:12:43Z
+databases:
+- name: shop-organic
+  databaseName: shops_0kkg
+  user: shops_0kkg_user
+  plan: free
+  region: singapore
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  postgresMajorVersion: "16"
+version: "1"
