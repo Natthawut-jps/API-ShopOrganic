@@ -2,7 +2,6 @@ const express = require("express");
 const route = express.Router();
 const { Userinfo } = require("../../../model/Userinfo");
 const { Order } = require("../../../model/Order");
-const { Shipping_address } = require("../../..//model/Shipping_address");
 
 route.get("/get_customers", async (req, res) => {
   const customers = await Userinfo.findAll();

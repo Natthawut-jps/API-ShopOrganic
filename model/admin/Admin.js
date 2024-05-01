@@ -4,11 +4,11 @@ const { sequelize } = require("../_Database_Connected");
 const Admin = sequelize.define('admin', {
     username: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     createdAt: {
         field: 'createdAt',
@@ -18,7 +18,7 @@ const Admin = sequelize.define('admin', {
       updatedAt: {
         field: 'updatedAt',
         allowNull: false,
-        type: DataTypes.DATEONLY
+        type: DataTypes.DATEONLY,
       }
 });
 
