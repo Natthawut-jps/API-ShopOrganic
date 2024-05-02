@@ -5,7 +5,7 @@ const { Shipping_address } = require("../../..//model/Shipping_address");
 
 route.get("/order", async (req, res) => {
   const workbook = new excel.Workbook();
-  const file = await workbook.xlsx.readFile("./public/doc/test.xlsx");
+  const file = await workbook.xlsx.readFile("./public/doc/KerryExpressImportTemplate.xlsx");
   if (file) {
     const sheet = workbook.getWorksheet(1);
     const address = await Shipping_address.findAll();

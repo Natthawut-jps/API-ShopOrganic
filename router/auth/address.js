@@ -48,10 +48,9 @@ route.post("/add", async (req, res) => {
   }
 });
 
-route.post("/updateaddress", async (req, res) => {
+route.post("/update", async (req, res) => {
   try {
     if (req.body && req.user) {
-      const all = await Shipping_address.findAll();
       const user = await Userinfo.findOne({ email: req.user._uid });
       if (user) {
         const address = await Shipping_address.update({
@@ -65,6 +64,8 @@ route.post("/updateaddress", async (req, res) => {
           zipCode: req.body.zipCode,
           email: req.body.email,
           phone: req.body.phone,
+        }, {
+          where: { id: req.body.id}
         });
         return res.status(200).json(address);
       } else {
