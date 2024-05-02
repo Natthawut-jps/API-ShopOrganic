@@ -20,6 +20,7 @@ require("./model/admin/Products");
 require("./model/Shipping_address");
 require("./model/Userinfo");
 require("./model/Transaction");
+require("./model/Contact");
 // model Server-Side
 require("./model/admin/Admin");
 require("./model/admin/Categories");
