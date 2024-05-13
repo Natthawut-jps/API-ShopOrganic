@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../_Database_Connected");
+const bcrypt = require("bcrypt");
 
 const Admin = sequelize.define('admin', {
     username: {
@@ -23,8 +24,17 @@ const Admin = sequelize.define('admin', {
 });
 
 (async () => {
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: false }).then(async () => {
+      if( (await Admin.findAll()).length > 0) {
+        return false;
+      } else {
+        await Admin.create({
+          username: "admin",
+          password: (await bcrypt.hash("0000", 10)).toString()
+        })
+      }
+    })
   })();
-  
+
   module.exports = { Admin };
   
