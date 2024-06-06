@@ -61,8 +61,6 @@ route.post("/order/one", async (req, res) => {
       where: { id: order.dataValues.address_id },
     });
 
-    console.log(order);
-    console.log(address);
     if (address && order) {
       sheet.addRow([
         1,
