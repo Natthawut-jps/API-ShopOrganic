@@ -25,15 +25,14 @@ route.get("/order", async (req, res) => {
         (item_a) => item_a.id === item.address_id
       );
       if (item_address.id === item.address_id) {
-        sheet.addRow([
-          index + 1,
-          `${item_address.dataValues.first_name} ${item_address.dataValues.last_name}`,
-          item_address.dataValues.phone,
-          `${item_address.dataValues.street} ${item_address.dataValues.tambon} ${item_address.dataValues.states} ${item_address.dataValues.county} ${item_address.dataValues.zipCode}`,
-          item_address.zipCode,
-          null,
-          `#${item.id}`,
-        ]);
+        const row = [];
+        row[1] = index + 1;
+        row[2] = `${item_address.dataValues.first_name} ${item_address.dataValues.last_name}`;
+        row[3] = item_address.dataValues.phone;
+        row[4] = `${item_address.dataValues.street} ${item_address.dataValues.tambon} ${item_address.dataValues.states} ${item_address.dataValues.county} ${item_address.dataValues.zipCode}`;
+        row[5] = item_address.dataValues.zipCode;
+        row[13] = `#${item.id}`;
+        sheet.addRow(row);
       } else {
         console.log("error item incorrect!!");
       }
@@ -62,15 +61,14 @@ route.post("/order/one", async (req, res) => {
     });
 
     if (address && order) {
-      sheet.addRow([
-        1,
-        `${address.dataValues.first_name} ${address.dataValues.last_name}`,
-        address.dataValues.phone,
-        `${address.dataValues.street} ${address.dataValues.tambon} ${address.dataValues.states} ${address.dataValues.county} ${address.dataValues.zipCode}`,
-        address.dataValues.zipCode,
-        null,
-        `#${order.dataValues.id}`,
-      ]);
+      const row = [];
+      row[1] = 1;
+      row[2] = `${address.dataValues.first_name} ${address.dataValues.last_name}`;
+      row[3] = address.dataValues.phone;
+      row[4] = `${address.dataValues.street} ${address.dataValues.tambon} ${address.dataValues.states} ${address.dataValues.county} ${address.dataValues.zipCode}`;
+      row[5] = address.dataValues.zipCode;
+      row[13] = `#${order.dataValues.id}`;
+      sheet.addRow(row);
     } else {
       console.log("error item incorrect!!");
     }
