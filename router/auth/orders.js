@@ -40,15 +40,39 @@ route.post("/add", async (req, res) => {
         Promise.all(
           response_2.map(async (item) => {
             const product = await Product.findByPk(item.product_id);
-            await Product.update(
-              {
-                sold: product.dataValues.sold + item.quantity,
-                quantity: product.dataValues.quantity - item.quantity,
-              },
-              {
-                where: { id: item.product_id },
-              }
-            );
+            if (product.quantity <= 10 && product.quantity !== 0) {
+              await Product.update(
+                {
+                  sold: product.dataValues.sold + item.quantity,
+                  quantity: product.dataValues.quantity - item.quantity,
+                  status: 2,
+                },
+                {
+                  where: { id: item.product_id },
+                }
+              );
+            } else if (product.quantity === 0) {
+              await Product.update(
+                {
+                  sold: product.dataValues.sold + item.quantity,
+                  quantity: product.dataValues.quantity - item.quantity,
+                  stutus: 1,
+                },
+                {
+                  where: { id: item.product_id },
+                }
+              );
+            } else {
+              await Product.update(
+                {
+                  sold: product.dataValues.sold + item.quantity,
+                  quantity: product.dataValues.quantity - item.quantity,
+                },
+                {
+                  where: { id: item.product_id },
+                }
+              );
+            }
           })
         ).then(async () => {
           const product = await Product.findAll();
