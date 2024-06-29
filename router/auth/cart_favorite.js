@@ -99,7 +99,7 @@ route.post('/addFavorite', async (req, res, next) => {
             price: price,
             categories: categories,
             rating: rating,
-            imgURL: '/img/Tometo.png',
+            imgURL: req.body.imgURL,
             pid: id,
             uid: uid
         }).then(async () => {
